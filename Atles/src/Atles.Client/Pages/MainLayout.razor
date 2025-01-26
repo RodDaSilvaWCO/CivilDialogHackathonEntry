@@ -1,0 +1,10 @@
+﻿@inherits Atles.Client.Pages.MainLayoutComponent
+
+<CascadingValue Value="User">
+    <CascadingValue Value="Site">
+        @if (Site != null)
+        {
+            @AddLayout("Public", Body)
+        }
+    </CascadingValue>
+</CascadingValue>

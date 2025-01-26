@@ -1,0 +1,48 @@
+﻿@inherits Atles.Client.Pages.Admin.Forums.FormComponent
+
+<div class="row">
+    <div class="col-md-4">
+        <EditForm Model="Model.Forum" OnValidSubmit="OnSubmit">
+            <FluentValidationValidator />
+            <div class="form-group">
+                <label for="categoryId" class="control-label">@Localizer["Category"]</label>
+                <InputSelect id="categoryId" @bind-Value="Model.Forum.CategoryId" class="form-control">
+                    @foreach (var item in Model.Categories)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                </InputSelect>
+            </div>
+            <div class="form-group">
+                <label for="name" class="control-label">@Localizer["Name"]</label>
+                <InputText id="name" @bind-Value="Model.Forum.Name" class="form-control" />
+                <ValidationMessage For="@(() => Model.Forum.Name)" />
+            </div>
+            <div class="form-group">
+                <label for="slug" class="control-label">@Localizer["Slug"]</label>
+                <InputText id="slug" @bind-Value="Model.Forum.Slug" class="form-control" />
+                <ValidationMessage For="@(() => Model.Forum.Slug)" />
+            </div>
+            <div class="form-group">
+                <label for="description" class="control-label">@Localizer["Description"]</label>
+                <InputTextArea id="description" @bind-Value="Model.Forum.Description" class="form-control" rows="5" />
+                <ValidationMessage For="@(() => Model.Forum.Description)" />
+            </div>
+            <div class="form-group">
+                <label for="permissionSetId" class="control-label">@Localizer["Permission Set"]</label>
+                <select id="permissionSetId" @bind="Model.Forum.PermissionSetId" class="form-control">
+                    <option value="@Guid.Empty">&lt;@Localizer["Inherit from Category"]&gt;</option>
+                    @foreach (var item in Model.PermissionSets)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="@SubmitButtonText" class="btn btn-primary mb-1" />
+                <button type="button" class="btn btn-secondary mb-1" @onclick="OnCancel">@Localizer["Cancel"]</button>
+            </div>
+            <ValidationSummary />
+        </EditForm>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <UserSecretsId>Atles.Server-35EFD1FC-2839-4B16-9DA2-F7DC412158E9</UserSecretsId>
+    <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
+    <AspNetCoreModuleName>AspNetCoreModule</AspNetCoreModuleName>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  <ImplicitUsings>enable</ImplicitUsings>
+	  <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Areas\Identity\Pages\Shared\**" />
+    <Content Remove="Areas\Identity\Pages\Shared\**" />
+    <EmbeddedResource Remove="Areas\Identity\Pages\Shared\**" />
+    <None Remove="Areas\Identity\Pages\Shared\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="FluentValidation" Version="10.3.3" />
+    <PackageReference Include="LucaBriguglia.Docs" Version="1.2.0" />
+    <PackageReference Include="Markdig" Version="0.26.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.1" />
+    <PackageReference Include="Scrutor" Version="3.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Atles.Client\Atles.Client.csproj" />
+    <ProjectReference Include="..\Atles.Commands\Atles.Commands.csproj" />
+    <ProjectReference Include="..\Atles.Data\Atles.Data.csproj" />
+    <ProjectReference Include="..\Atles.Commands.Handlers\Atles.Commands.Handlers.csproj" />
+    <ProjectReference Include="..\Atles.Events.Handlers\Atles.Events.Handlers.csproj" />
+    <ProjectReference Include="..\Atles.Domain\Atles.Domain.csproj" />
+    <ProjectReference Include="..\Atles.Core\Atles.Core.csproj" />
+    <ProjectReference Include="..\Atles.Models\Atles.Models.csproj" />
+    <ProjectReference Include="..\Atles.Queries\Atles.Queries.csproj" />
+    <ProjectReference Include="..\Atles.Queries.Handlers\Atles.Queries.Handlers.csproj" />
+    <ProjectReference Include="..\Atles.Validators.ValidationRules\Atles.Validators.ValidationRules.csproj" />
+    <ProjectReference Include="..\Atles.Validators\Atles.Validators.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="6.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>

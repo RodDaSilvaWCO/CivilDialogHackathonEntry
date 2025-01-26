@@ -1,0 +1,56 @@
+﻿@using Atles.Domain
+@inherits Atles.Client.Pages.Admin.PermissionSets.FormComponent
+
+<div class="row">
+    <div class="col-md-8">
+        <EditForm Model="Model.PermissionSet" OnValidSubmit="OnSubmit">
+            <FluentValidationValidator />
+            <div class="form-group">
+                <label for="name" class="control-label">@Localizer["Name"]</label>
+                <InputText id="name" @bind-Value="Model.PermissionSet.Name" Class="form-control" />
+                <ValidationMessage For="@(() => Model.PermissionSet.Name)" />
+            </div>
+            <div class="form-group">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">@Localizer["Role"]</th>
+                            @for (var i = 0; i < Enum.GetValues(typeof(PermissionType)).Length; i++)
+                            {
+                                <th class="text-center">@Enum.GetValues(typeof(PermissionType)).GetValue(i)</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var permission in Model.PermissionSet.Permissions)
+                        {
+                            <tr>
+                                <td>
+                                    @permission.RoleName
+                                </td>
+                                @foreach (var permissionType in permission.PermissionTypes)
+                                {
+                                    <td class="text-center">
+                                        @if (permissionType.Disabled)
+                                        {
+                                            <InputCheckbox @bind-Value="@permissionType.Selected" Disabled="disabled" />
+                                        }
+                                        else
+                                        {
+                                            <InputCheckbox @bind-Value="@permissionType.Selected" />
+                                        }
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="@SubmitButtonText" class="btn btn-primary mb-1" />
+                <button type="button" class="btn btn-secondary mb-1" @onclick="OnCancel">@Localizer["Cancel"]</button>
+            </div>
+            <ValidationSummary />
+        </EditForm>
+    </div>
+</div>
