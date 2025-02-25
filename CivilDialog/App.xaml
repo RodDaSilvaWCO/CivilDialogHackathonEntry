@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:CivilDialog"
+             x:Class="CivilDialog.App"
+             xmlns:models ="clr-namespace:CivilDialog.Models"
+             xmlns:viewmodel="clr-namespace:CivilDialog.ViewModels"
+             x:DataType="viewmodel:PostCommentViewModel"
+           >
+
+
+    <Application.MainPage>
+        <Shell>
+
+            <!--<ShellContent  Title="Home" Icon="webcurfew64.ico">
+                <ShellContent.ContentTemplate>
+                    <DataTemplate>
+                        <ContentPage>
+                         
+                            <WebView Source="{Binding WebViewSource}" />
+                            -->
+            <!--<BlazorWebView  x:Name="blazorWebView1" HostPage="wwwroot/index.html">
+                                <BlazorWebView.RootComponents>
+                                    <RootComponent Selector="#app" ComponentType="{x:Type local:Components.Routes}" />
+                                </BlazorWebView.RootComponents>
+                            </BlazorWebView>-->
+            <!--
+                        </ContentPage>
+                    </DataTemplate>
+                </ShellContent.ContentTemplate>
+            </ShellContent>-->
+            <ShellContent   Title="Civil Dialog">
+                    <!--Icon="webcurfew64.ico"
+                     ContentTemplate="{DataTemplate local:DisplayAlert}" />--> -->
+                <ShellContent.ContentTemplate>
+                    <DataTemplate>
+
+                        <ContentPage>
+                            <!--<ContentPage.MenuBarItems>
+                                <MenuBarItem Text="Content">
+                                    <MenuFlyoutItem Text="Home" Clicked="MenuItem_Clicked"></MenuFlyoutItem>
+                                    <MenuFlyoutItem Text="Counter" Clicked="MenuItem_Clicked"></MenuFlyoutItem>
+                                    <MenuFlyoutItem Text="Weather" Clicked="MenuItem_Clicked"></MenuFlyoutItem>
+                                </MenuBarItem>
+                            </ContentPage.MenuBarItems>-->
+
+
+                            <!--<ScrollView>-->
+                            <Grid>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50" />
+                                    <RowDefinition Height="0" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <!--Row 0-->
+                                <Grid Grid.Row="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"  />
+                                    </Grid.RowDefinitions>
+                                    <HorizontalStackLayout  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                                        <Button Text="{x:Static models:IconFont.Send}"
+                                                Style="{x:StaticResource MaterialFont}" 
+                                                Command="{Binding PostCommand}"
+                                                IsVisible="{Binding IsVisible}"
+                                                IsEnabled="{Binding IsEnabled}"
+                                                TextColor="{Binding SendButtonColor}"
+                                               />
+                                        <Editor IsVisible="{Binding IsVisible}" 
+                                                Placeholder="{Binding PlaceHolderText}" 
+                                                IsEnabled="{Binding IsEnabled}" 
+                                                Text="{Binding PostText}"  
+                                                AutoSize="TextChanges" 
+                                                HorizontalOptions ="StartAndExpand" 
+                                                WidthRequest="10000"/>
+                                    </HorizontalStackLayout>
+                                </Grid>
+                                <!--Row 1-->
+                                <ActivityIndicator IsRunning="{Binding IsBusy}"  Color="{Binding SendButtonColor}"/>
+                                <!--Row 2-->
+                                <!--<WebView Source="{Binding WebViewSource}" Grid.Row="1"/>-->
+                                <WebView Source="{Binding WebViewSource}" Grid.Row="2"/>
+                                <!--<WebView Source="https://www.Google.com" Grid.Row="1"/>-->
+                                <!--<BlazorWebView  x:Name="blazorWebView1" HostPage="wwwroot/index.html"  Grid.Row="1">
+                                    <BlazorWebView.RootComponents>
+                                        <RootComponent Selector="#app" ComponentType="{x:Type local:Components.Routes}" />
+                                    </BlazorWebView.RootComponents>
+                                </BlazorWebView>-->
+                            </Grid>
+                        </ContentPage>
+                    </DataTemplate>
+                </ShellContent.ContentTemplate>
+            </ShellContent>
+        </Shell>
+    </Application.MainPage>
+
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <!--
+            For information about styling .NET MAUI pages
+            please refer to the documentation:
+            https://go.microsoft.com/fwlink/?linkid=2282329
+        -->
+            <Style TargetType="Button" x:Key="MaterialFont">
+                <Setter Property="FontFamily" Value="MaterialIcons"/>
+                <Setter Property="FontSize" Value="24"/>
+            </Style>
+
+        </ResourceDictionary>
+    </Application.Resources>
+
+
+
+
+</Application>
