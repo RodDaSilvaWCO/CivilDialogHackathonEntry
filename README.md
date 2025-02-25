@@ -1,45 +1,113 @@
-# Civil Dialog - Windows Snapdragon Hackathon Entry
+# CLI Chat application
 
-## Inspiration
-Humanity is facing a wider and growing list of existential problems that threaten our very survival.  At the very moment we need to be leaning into difficult conversations around these seemingly intractable problems more, people are actually disengaging due to “crisis fatigue".    For the first time in human history we have technology that lets us collaborate on a global scale toward finding solutions to our most pressing problems.   However it turns out the technology is a double-edge sword because with so many people speaking there isn’t enough listening.   Discussion has turned into debate, Talking into Yelling, information into disinformation.  Our public discourse has turned toxic in this “age of rage”, and our very democracy hangs in the balance.
+Chat application for Windows on Snapdragon® with [Llama 2](https://aihub.qualcomm.com/compute/models/llama_v2_7b_chat_quantized) using Genie SDK.
 
-Big moderated online media platforms have tried to censor conversations based on their own ideas of “truth” creating a cancel culture.  Whereas, big “unmoderated” online media platforms produce vitriol and rage on a daily basis, all in the name of protecting a “freedom of speech” ideal as the indispensable right.  Both types of online media platform are failing to be a productive public square.  What we need is a balanced approach, where individual thought, no matter how controversial, is protected, as long as it is expressed respectfully, without flaming, trolling and rhetoric.  
+The app demonstrates how to use the Genie APIs from [QNN SDK](https://qpm.qualcomm.com/#/main/tools/details/qualcomm_ai_engine_direct) to run and accelerate LLMs using the Snapdragon® Neural Processing Unit (NPU).
 
-Introducing **CivilDialog** - designed to cultivate better public discourse.
+## Requirements
 
-## What it does
-CivilDialog is a public discussion board/instance messenger Windows application that uses a local LLM AI model to analyze people's posts for common logical fallacies - especially the **Ad Hominem**  (personal attack) family of logical fallacies.   If any are detected the software requires the user to remove the personal attack before it can be posted publicly.  By having the post "cleansed" **before** it is made public, public discourse is largely free of common flames and negative comments made by trolls.  In this way the AI enabled **CivilDialog** literally elevates the standard of posts in the digital global public square, because it forces people to make the effort to be more thoughtful, intentional and respectful with their dialog.
+### Platform
+
+- Snapdragon® Platform (e.g. X Elite)
+- Windows 11+
+
+### Tools and SDK
+
+- Visual Studio 22
+  - Download any variant of [Visual Studio here](https://visualstudio.microsoft.com/vs/)
+  - Make sure Desktop development with C++ tools are selected during installation or installed separately later
+- QNN SDK: [Qualcomm AI Engine Direct](https://qpm.qualcomm.com/#/main/tools/details/qualcomm_ai_engine_direct)
+  - Refer to [Setup QNN SDK](#setup-qnn-sdk) to install compatible QNN SDK for models downloaded from AI Hub.
+
+## Build App
+
+### Compile to QNN Binary via AI Hub and Generate Genie Bundle
+
+1. Copy `ChatApp` to target device (e.g., Snapdragon® based Windows)
+
+2. Please follow [this
+tutorial](https://github.com/quic/ai-hub-apps/tree/main/tutorials/llm_on_genie)
+to generate `genie_bundle` required by ChatApp
+
+3. Copy bundle assets from step 2 to `ChatApp\genie_bundle`. You should see
+`ChatApp\genie_bundle\*.bin` QNN binary files.
 
 
-## How we built it
-There are three major pieces, plus the AI model itself.   For the AI model we tested with two, Llama 3.2.3b as generated using the llm_on_genie tutorial from qai_hub,  The other model was Phi 3.5 (using the ONNX runtime) obtained directly from Huggingface.  
+### Setup QNN SDK
 
-[NOTE:  __We tried the recently posted Phi 3.5 models on qai_hub but was unable to get it running following the same llm_on_genie tutorial in time for the Hackathon deadline.  This was a shame as this is a far superior model in our observation for this particular use case.  Hopefully we can get the issue corrected and it get running on the Snapdragon in the near future.  In the meantime we showed Phi3.5 running on the CPU (not the NPU) as can be seen in the demo.__]
+Please ensure that the QNN SDK version installed on the system is the same as the one used by AI Hub for generating QNN context binaries.
+You can find the AI Hub QNN version in the compile job page as shown in the following screenshot:
 
-##Please Note:
-The submission comes with two videos, the pitch video and the demo video.  We ran out of time to combine them prior to the submission deadline.
+![QNN version on AI Hub](assets/images/ai-hub-qnn-version.png)
 
-Pitch:  [link](https://youtu.be/ZJ67NGt1cEQ)  
-Demo: [link](https://youtu.be/hSbcLgq4MjI)  Demo
+Having different QNN versions could result in runtime or load-time failures.
 
-## Challenges we ran into
-There were several challenges we ran into:
+Please follow the following steps to configure QNN SDKs for ChatApp:
 
-1) Being new to AI Development (including Python and the Python tool chain) made the tutorial difficult for us.
+1. Download and install [Qualcomm AI Engine Direct](https://qpm.qualcomm.com/#/main/tools/details/qualcomm_ai_engine_direct)
+2. Set global environment variable `QNN_SDK_ROOT` to root path of QNN SDK e.g. `C:\Qualcomm\AIStack\QAIRT\2.26.0.240828`
 
-2) Having to refactor the C++ ChatApp to get our app to talk to it, because there was no way to consume the genie SDK from .NET (which are app was written in)
+    - Make sure you can run the following command with no error and that it prints the various libraries available with your QNN package:
 
-3) Missing ARM64 support for ONNX runtimes made it hard to develop on the Snapdragon laptop directly.  Most development was done on a Windows x64 machine and then ported over.
+    ```powershell
+    ls ${env:QNN_SDK_ROOT}/lib
+    ```
 
-4) Having the two models (LLama and Phi) behave very differently when using the same logical system prompt and user input.
+    ![QNN SDK Verion check](assets/images/sample-qnn-sdk-check.png)
+3. If command from step 2 succeeds, QNN SDK is correctly configured to work with ChatApp.
 
-## Accomplishments that we're proud of
-Putting it all together!
 
-## What we learned
-A ton.  Too much to mention here.  The entire space was new for us.  We had an idea for an AI application that required "local" inferencing in reasonable time, and this Hackathon gave us the excuse to build it.
+### Build project in Visual Studio 22
 
-## What's next for Civil Dialog
-What we have now is just a POC.  We would have to put a log of work into the project to make it a viable tool that people would actually use.  But we are encouraged by the results so far!
+Make sure `QNN_SDK_ROOT` is set globally pointing to QNN SDK before you build the project.
 
-Lastly a shout out to the support folks on the Qualcomm QAI Slack channel for being patient with us and providing so much help.  We couldn't of done this without their help.
+1. Open `ChatApp.sln`
+2. Build project in Visual Studio
+
+## Running App
+
+### Providing local paths
+
+### Running via Visual Studio
+
+Click on the green play button to build and run.
+
+Visual studio project is configured with the following command arguments:
+
+```powershell
+.\ARM64\Debug\ChatApp.exe --genie-config .\\genie_bundle\\genie_config.json --base-dir .\\genie_bundle\\
+```
+
+### Running app via CLI
+
+```powershell
+cd {Project directory}
+.\ARM64\Debug\ChatApp.exe --genie-config .\\genie_bundle\\genie_config.json --base-dir .\\genie_bundle\\
+```
+
+Run `--help` to learn more:
+
+```powershell
+.\ARM64\Debug\ChatApp.exe --help
+```
+
+Make sure to provide paths to local config file and models using `\\` or `/` as a path separator and not `\`
+
+
+#### Correct file path examples
+
+```powershell
+1. C:\\Path\\To\\Model\\Config\\llama2_7b.json
+2. C:/Path/To/Model/Config/llama2_7b.json
+```
+
+#### Incorrect file path example
+
+```powershell
+1. C:\Path\To\Model\Config\llama2_7b.json
+```
+
+
+### Sample Output
+
+![sample_output](assets/images/sample_output.png)
